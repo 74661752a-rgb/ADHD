@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ADHD 이해 대시보드</title>
+<meta name="description" content="ADHD의 특징, 치료 과정, 식이요법, 7일 수면·감정 조절 프로그램을 정리한 건강정보 페이지">
+<style>
+:root{
+  color-scheme:light dark;
+  --color-fg:#14212b;--color-fg-muted:#51606c;--color-bg:#eef3f7;--color-panel:#ffffff;--color-border-line:#d3dde5;
+  --color-ok:#1b7a4b;--color-bad:#c8383a;
+}
+@media (prefers-color-scheme:dark){
+  :root{--color-fg:#e6edf2;--color-fg-muted:#9fb0bd;--color-bg:#0f171d;--color-panel:#18232b;--color-border-line:#2b3a45;--color-ok:#4cc38a;--color-bad:#ff7b7b}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;padding:clamp(.75rem,3vw,2rem);background:var(--color-bg);color:var(--color-fg)}
+button,select,input{color:inherit}
+
+.ad{
+  --blue:#0a5c8f;--blue-d:#073f63;--teal:#0f8b8d;--amber:#e8a100;
+  --c0:#1769aa;--c1:#b86a00;--c2:#0f8b8d;--c3:#6b5bb5;
+  --blue-t:color-mix(in srgb,var(--blue) 60%,var(--color-fg));
+  --tint:color-mix(in srgb,var(--color-fg) 5%,var(--color-panel));
+  max-width:64rem;margin-inline:auto;color:var(--color-fg);
+  font-family:"Pretendard","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic","Segoe UI",system-ui,sans-serif;
+  font-size:1rem;line-height:1.65;letter-spacing:-0.01em;
+}
+
+/* 상단 소개 영역 */
+.ad .ad-hero{position:relative;overflow:hidden;color:#fff;border-radius:16px;margin-bottom:1rem;padding:clamp(1rem,3vw,1.75rem);background:linear-gradient(120deg,var(--blue-d),var(--blue) 55%,var(--teal))}
+.ad .ad-hero::after{content:"";position:absolute;right:-2.5rem;top:-2.5rem;width:12rem;height:12rem;background:radial-gradient(circle,rgba(255,255,255,.2),transparent 65%);pointer-events:none}
+.ad .ad-brand{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+.ad .ad-logo{flex:none;width:2.5rem;height:2.5rem}
+.ad .ad-site{display:block;font-weight:700;font-size:1.0625rem}
+.ad .ad-sub{display:block;font-size:.8125rem;opacity:.85}
+.ad h1{font-family:inherit;font-weight:800;font-size:clamp(1.5rem,4vw,2.1rem);line-height:1.25;margin:0 0 .5rem;color:#fff}
+.ad .ad-lead{color:rgba(255,255,255,.92);max-width:42rem;margin:0 0 1rem}
+.ad .ad-lead .ad-n{display:inline-block;background:#fff;color:var(--blue-d);border-radius:8px;padding:0 .5rem;margin-inline:.15rem;font-weight:800;font-variant-numeric:tabular-nums}
+.ad .ad-badges{display:flex;flex-wrap:wrap;gap:.5rem}
+.ad .ad-badges span{font-size:.75rem;font-weight:600;padding:.2rem .7rem;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.38)}
+
+/* 메뉴 탭 */
+.ad .ad-tabs{display:flex;gap:.25rem;margin:0 0 1.25rem;border-bottom:2px solid var(--color-border-line);overflow-x:auto}
+.ad .ad-tab{font:inherit;font-weight:600;cursor:pointer;background:transparent;border:0;border-bottom:3px solid transparent;margin-bottom:-2px;border-radius:8px 8px 0 0;color:var(--color-fg-muted);padding:.65rem 1rem;white-space:nowrap}
+.ad .ad-tab::before{content:attr(data-n);display:inline-block;margin-right:.45rem;padding:.05rem .4rem;border-radius:6px;font-size:.75rem;background:var(--tint);color:var(--color-fg-muted)}
+.ad .ad-tab:hover{color:var(--color-fg)}
+.ad .ad-tab:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.ad .ad-tab[aria-selected="true"]{color:var(--blue-t);border-bottom-color:var(--blue);background:color-mix(in srgb,var(--blue) 9%,transparent)}
+.ad .ad-tab[aria-selected="true"]::before{background:var(--blue);color:#fff}
+.ad .ad-panel[hidden]{display:none}
+
+/* 섹션 제목 */
+.ad .ad-sechead{display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem .75rem;margin:0 0 1rem}
+.ad .ad-kicker{font-size:.75rem;font-weight:800;letter-spacing:.1em;color:var(--teal)}
+.ad .ad-sectitle{font-size:1.375rem;font-weight:800;margin:0;color:var(--color-fg)}
+
+/* 카드 */
+.ad .ad-card{min-width:0;margin-bottom:1rem;padding:1.1rem 1.25rem;background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:14px;box-shadow:0 1px 3px rgba(7,63,99,.1)}
+.ad .ad-card>h2{display:flex;align-items:center;gap:.6rem;margin:0 0 .35rem;padding:0;border:0;font-size:1.0625rem;font-weight:700}
+.ad .ad-card>h2::before{content:"";flex:none;width:.3rem;height:1.1rem;border-radius:3px;background:var(--teal)}
+.ad .ad-note{margin:0 0 .75rem;color:var(--color-fg-muted);font-size:.8125rem;line-height:1.55}
+
+/* 숫자 카드 */
+.ad .ad-grid{display:grid;gap:.85rem;margin-bottom:1rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,11rem),1fr))}
+.ad .ad-grid .ad-card{--k:var(--c0);margin:0;padding:.9rem 1rem;border-top:4px solid var(--k);background:color-mix(in srgb,var(--k) 8%,var(--color-panel))}
+.ad .ad-grid .ad-card:nth-child(4n+2){--k:var(--c2)}
+.ad .ad-grid .ad-card:nth-child(4n+3){--k:var(--c3)}
+.ad .ad-grid .ad-card:nth-child(4n+4){--k:var(--c1)}
+.ad .ad-diet-grid .ad-card:nth-child(n){--k:var(--c1)}
+.ad .ad-label{display:block;min-height:2.4em;font-size:.78rem;font-weight:600;color:var(--color-fg-muted);line-height:1.4}
+.ad .ad-big{font-size:2.4rem;font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums;color:color-mix(in srgb,var(--k) 75%,var(--color-fg))}
+.ad .ad-unit{margin-left:.3rem;font-size:.9rem;font-weight:600;color:var(--color-fg-muted)}
+.ad .ad-cap{display:block;margin-top:.4rem;font-size:.78rem;line-height:1.5;color:var(--color-fg-muted)}
+
+
+/* 표 */
+.ad .ad-scroll{overflow:auto;max-height:32rem;border:1px solid var(--color-border-line);border-radius:10px}
+.ad table{width:100%;border-collapse:collapse;font-size:.875rem}
+.ad th{position:sticky;top:0;z-index:1;padding:.6rem .8rem;text-align:left;white-space:nowrap;font-weight:700;color:#fff;background:var(--blue);border-bottom:2px solid var(--blue-d)}
+.ad td{padding:.6rem .8rem;vertical-align:top;line-height:1.55;border-bottom:1px solid color-mix(in srgb,var(--color-fg) 14%,var(--color-panel))}
+.ad td:first-child{font-weight:700;white-space:nowrap}
+.ad td:last-child{color:var(--color-fg-muted);font-size:.8125rem}
+.ad tbody tr:where(:nth-child(even)) td{background:color-mix(in srgb,var(--color-fg) 4%,var(--color-panel))}
+.ad tbody tr:last-child td{border-bottom:0}
+.ad tr.ad-in td{background:color-mix(in srgb,var(--c0) 15%,var(--color-panel))}
+.ad tr.ad-in td:first-child{box-shadow:inset 6px 0 0 var(--c0)}
+.ad tr.ad-hy td{background:color-mix(in srgb,var(--c1) 17%,var(--color-panel))}
+.ad tr.ad-hy td:first-child{box-shadow:inset 6px 0 0 var(--c1)}
+.ad tr.ad-you td{background:color-mix(in srgb,var(--teal) 24%,var(--color-panel));color:var(--color-fg);font-weight:600}
+.ad tr.ad-you td:first-child{box-shadow:inset 6px 0 0 var(--teal)}
+.ad tr.ad-you td:first-child::after{content:"현재 해당";display:inline-block;margin-left:.5rem;padding:.05rem .5rem;border-radius:999px;font-size:.7rem;font-weight:700;color:#fff;background:var(--teal);vertical-align:middle}
+.ad tr.ad-you td:last-child{color:var(--color-fg-muted);font-weight:400}
+.ad td.ad-step{background:color-mix(in srgb,var(--blue) 18%,var(--color-panel));box-shadow:inset 6px 0 0 var(--blue)}
+.ad td.ad-eff{background:color-mix(in srgb,var(--amber) 24%,var(--color-panel));box-shadow:inset 6px 0 0 var(--amber)}
+.ad td.ad-eff-rare{background:color-mix(in srgb,var(--color-bad) 22%,var(--color-panel));box-shadow:inset 6px 0 0 var(--color-bad)}
+.ad td.ad-app{background:color-mix(in srgb,var(--blue) 12%,var(--color-panel));box-shadow:inset 6px 0 0 var(--blue)}
+.ad td.ad-ev-strong{background:color-mix(in srgb,var(--color-ok) 30%,var(--color-panel));font-weight:700}
+.ad td.ad-ev-mid{background:color-mix(in srgb,var(--c0) 24%,var(--color-panel));font-weight:700}
+.ad td.ad-ev-some{background:color-mix(in srgb,var(--amber) 30%,var(--color-panel));font-weight:700}
+.ad td.ad-ev-tip{background:color-mix(in srgb,var(--c3) 22%,var(--color-panel));font-weight:700}
+.ad td.ad-caution{background:color-mix(in srgb,var(--color-bad) 13%,var(--color-panel))}
+
+/* 증상 묶음 선택 박스 */
+.ad .ad-pick{display:grid;gap:.75rem;margin:0 0 .75rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr))}
+.ad .ad-pickbtn{--k:var(--c0);display:flex;flex-direction:column;gap:.2rem;font:inherit;text-align:left;cursor:pointer;color:var(--color-fg);padding:.85rem 1rem;border:2px solid var(--k);border-radius:12px;background:color-mix(in srgb,var(--k) 10%,var(--color-panel));transition:background .15s,color .15s,box-shadow .15s}
+.ad .ad-pickbtn.ad-pick-hy{--k:var(--c1)}
+.ad .ad-pickbtn b{font-size:1.0625rem;font-weight:800}
+.ad .ad-pickbtn span{font-size:.8125rem;color:var(--color-fg-muted)}
+.ad .ad-pickbtn:hover{background:color-mix(in srgb,var(--k) 20%,var(--color-panel))}
+.ad .ad-pickbtn:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.ad .ad-pickbtn[aria-pressed="true"]{background:var(--k);box-shadow:0 2px 8px color-mix(in srgb,var(--k) 45%,transparent)}
+.ad .ad-pickbtn[aria-pressed="true"] b,.ad .ad-pickbtn[aria-pressed="true"] span{color:#fff}
+.ad .ad-pickbtn[aria-pressed="true"] b::after{content:" ✓"}
+.ad .ad-hint{margin:0;padding:1rem;text-align:center;color:var(--color-fg);font-weight:800;font-size:1rem;background:var(--tint);border:1px dashed var(--color-border-line);border-radius:10px}
+.ad .ad-hint[hidden],.ad .ad-scroll[hidden]{display:none}
+
+.ad td.ad-ck-ok{background:color-mix(in srgb,var(--color-ok) 30%,var(--color-panel));font-weight:700;white-space:nowrap}
+.ad td.ad-ck-part{background:color-mix(in srgb,var(--amber) 32%,var(--color-panel));font-weight:700}
+.ad td.ad-ck-no{background:color-mix(in srgb,var(--color-fg-muted) 22%,var(--color-panel));font-weight:700}
+/* 7일 프로그램 */
+.ad td.ad-lines{white-space:pre-line}
+.ad .ad-daybar{display:grid;gap:.5rem;margin-bottom:1rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,9.5rem),1fr))}
+.ad .ad-daybtn{display:flex;flex-direction:column;gap:.15rem;font:inherit;text-align:left;cursor:pointer;color:var(--color-fg);padding:.6rem .75rem;border:2px solid var(--blue);border-radius:10px;background:color-mix(in srgb,var(--blue) 8%,var(--color-panel));transition:background .15s}
+.ad .ad-daybtn b{font-size:.9375rem;font-weight:800}
+.ad .ad-daybtn span{font-size:.75rem;line-height:1.4;color:var(--color-fg-muted)}
+.ad .ad-daybtn:hover{background:color-mix(in srgb,var(--blue) 18%,var(--color-panel))}
+.ad .ad-daybtn:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.ad .ad-daybtn[aria-pressed="true"]{background:var(--blue);box-shadow:0 2px 8px color-mix(in srgb,var(--blue) 45%,transparent)}
+.ad .ad-daybtn[aria-pressed="true"] b,.ad .ad-daybtn[aria-pressed="true"] span{color:#fff}
+.ad .ad-daybody h3{margin:0 0 .25rem;font-size:1.125rem;font-weight:800}
+.ad .ad-goal{margin:0 0 .75rem;padding:.5rem .75rem;border-left:5px solid var(--teal);background:color-mix(in srgb,var(--teal) 10%,var(--color-panel));border-radius:0 8px 8px 0;font-weight:600}
+.ad td.ad-no{width:3.5rem;text-align:center}
+.ad td.ad-no span{display:inline-grid;place-items:center;width:1.75rem;height:1.75rem;border-radius:50%;font-weight:800;font-size:.8125rem;color:#fff;background:var(--blue)}
+.ad td.ad-min{width:5rem;white-space:nowrap;font-weight:700;background:color-mix(in srgb,var(--teal) 16%,var(--color-panel))}
+.ad .ad-exbox{margin-top:.85rem;padding:.75rem 1rem;background:color-mix(in srgb,var(--amber) 13%,var(--color-panel));border:1px solid color-mix(in srgb,var(--amber) 45%,transparent);border-left:6px solid var(--amber);border-radius:10px}
+.ad .ad-exbox b{font-weight:800}
+.ad .ad-exbox ul{margin:.35rem 0 0;padding-left:1.2rem}
+.ad .ad-exbox li{margin:.15rem 0;line-height:1.55}
+.ad .ad-daynote{margin:.75rem 0 0;padding:.65rem .9rem;border-radius:10px;background:color-mix(in srgb,var(--blue) 10%,var(--color-panel));border:1px solid color-mix(in srgb,var(--blue) 30%,transparent);font-weight:600}
+.ad .ad-tracker{min-width:44rem}
+.ad .ad-tracker td{vertical-align:middle}
+.ad .ad-tracker td:first-child{white-space:normal;min-width:12rem;background:color-mix(in srgb,var(--blue) 10%,var(--color-panel))}
+.ad .ad-tracker td:first-child small{display:block;margin-top:.15rem;font-weight:400;font-size:.72rem;color:var(--color-fg-muted)}
+.ad select.ad-sc{font:inherit;font-size:.875rem;width:3.4rem;padding:.25rem .2rem;color:var(--color-fg);background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:6px}
+.ad .ad-chartbox{position:relative;margin-top:.5rem;min-height:14rem}
+.ad .ad-chartbox svg text{fill:var(--color-fg-muted);font-size:11px}
+.ad .ad-chartempty{display:grid;place-items:center;min-height:14rem;color:var(--color-fg-muted);font-size:.875rem;background:var(--tint);border:1px dashed var(--color-border-line);border-radius:10px}
+.ad .ad-alert{display:flex;gap:.75rem;margin:0 0 1rem;padding:.9rem 1.1rem;color:var(--color-fg);background:color-mix(in srgb,var(--color-bad) 14%,var(--color-panel));border:1px solid color-mix(in srgb,var(--color-bad) 55%,transparent);border-left:6px solid var(--color-bad);border-radius:10px}
+.ad .ad-alert::before{content:"!";flex:none;display:grid;place-items:center;width:1.5rem;height:1.5rem;border-radius:50%;font-weight:800;color:#fff;background:var(--color-bad)}
+
+/* 번호·체크·평가 결과 */
+.ad td.ad-num{width:3.5rem;text-align:center;white-space:nowrap}
+.ad td.ad-num span{display:inline-grid;place-items:center;width:1.75rem;height:1.75rem;border-radius:50%;font-weight:800;font-size:.8125rem;color:#fff;background:var(--c0);font-variant-numeric:tabular-nums}
+.ad tr.ad-hy td.ad-num span{background:var(--c1)}
+.ad td.ad-chk{width:6.5rem;white-space:nowrap}
+.ad td.ad-chk label{display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;font-weight:600;font-size:.8125rem;color:var(--color-fg-muted)}
+.ad td.ad-chk input{width:1.25rem;height:1.25rem;margin:0;cursor:pointer;accent-color:var(--c0)}
+.ad tr.ad-hy td.ad-chk input{accent-color:var(--c1)}
+.ad tr.ad-on td{font-weight:600}
+.ad tr.ad-on td.ad-chk label{color:var(--color-fg)}
+.ad tr.ad-on td:nth-child(3){text-decoration:none}
+.ad .ad-result{display:grid;gap:.75rem;margin-top:1rem;padding:1rem;background:var(--tint);border:1px solid var(--color-border-line);border-radius:12px}
+.ad .ad-result[hidden]{display:none}
+.ad .ad-res{padding:.75rem .9rem;background:var(--color-panel);border:1px solid var(--color-border-line);border-left:6px solid var(--rc);border-radius:10px}
+.ad .ad-res.ad-hit{background:color-mix(in srgb,var(--amber) 14%,var(--color-panel))}
+.ad .ad-res b{font-weight:800}
+.ad .ad-bar{height:.6rem;margin:.4rem 0;border-radius:999px;overflow:hidden;background:color-mix(in srgb,var(--color-fg) 12%,var(--color-panel))}
+.ad .ad-bar div{height:100%;border-radius:999px;background:var(--rc)}
+.ad .ad-res small{display:block;font-size:.8125rem;color:var(--color-fg-muted)}
+.ad .ad-result p{margin:0;font-size:.78rem;color:var(--color-fg-muted);line-height:1.55}
+
+/* 색 안내 */
+.ad .ad-legend{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 .75rem;font-size:.78rem}
+.ad .ad-legend span{display:inline-flex;align-items:center;gap:.4rem;padding:.15rem .7rem;border-radius:999px;background:var(--tint);border:1px solid var(--color-border-line)}
+.ad .ad-legend i{display:inline-block;width:.75rem;height:.75rem;border-radius:50%;background:var(--sw)}
+
+/* 안내 박스 */
+.ad .ad-warn{display:flex;gap:.75rem;margin:0 0 1rem;padding:.9rem 1.1rem;color:var(--color-fg);background:color-mix(in srgb,var(--amber) 16%,var(--color-panel));border:1px solid color-mix(in srgb,var(--amber) 60%,transparent);border-left:6px solid var(--amber);border-radius:10px}
+.ad .ad-warn::before{content:"!";flex:none;display:grid;place-items:center;width:1.5rem;height:1.5rem;border-radius:50%;font-weight:800;color:#fff;background:var(--amber)}
+.ad .ad-foot{display:flex;gap:.75rem;margin-top:1.25rem;padding:.9rem 1.1rem;font-size:.8125rem;line-height:1.6;color:var(--color-fg-muted);background:color-mix(in srgb,var(--blue) 9%,var(--color-panel));border:1px solid color-mix(in srgb,var(--blue) 30%,transparent);border-radius:12px}
+.ad .ad-foot::before{content:"i";flex:none;display:grid;place-items:center;width:1.5rem;height:1.5rem;border-radius:50%;font-weight:800;font-style:italic;color:#fff;background:var(--blue)}
+
+/* 불러오기 실패 */
+.ad .ad-fail{display:flex;align-items:center;justify-content:center;gap:.375rem;min-height:3rem;color:var(--color-fg-muted);font-size:.8125rem}
+.ad .ad-fail i{display:inline-block;width:.375rem;height:.375rem;border-radius:50%;background:var(--color-bad)}
+
+@media (max-width:40rem){
+  .ad td:first-child{white-space:normal}
+  .ad .ad-big{font-size:2rem}
+}
+</style>
+</head>
+<body>
+<div class="ad">
+  <header class="ad-hero">
+    <div class="ad-brand">
+      <svg class="ad-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#fff"/><path d="M13 7h6v6h6v6h-6v6h-6v-6H7v-6h6z" fill="#c8383a"/></svg>
+      <div><span class="ad-site">ADHD 건강정보</span><span class="ad-sub">주의력결핍 과잉행동장애 · 청소년 환자와 보호자를 위한 안내</span></div>
+    </div>
+    <h1>ADHD 이해 대시보드</h1>
+    <p class="ad-lead">만 17세는 증상이 <span class="ad-n" data-source="criteria" data-field="value" data-where="id=threshold_17">—</span>개 이상 해당되면 진단 기준에 들어가요. 치료는 약물치료와 행동치료를 함께 하는 것이 기본이고, 식이요법은 보조 수단이에요.</p>
+    <div class="ad-badges"><span>근거 기반 정보</span><span>AAP 진료 지침</span><span>DSM-5 진단 기준</span></div>
+  </header>
+
+  <div class="ad-tabs" role="tablist">
+    <button class="ad-tab" role="tab" data-tab="features" data-n="01" aria-selected="true">병의 특징</button>
+    <button class="ad-tab" role="tab" data-tab="treatment" data-n="02" aria-selected="false">치료 과정</button>
+    <button class="ad-tab" role="tab" data-tab="diet" data-n="03" aria-selected="false">식이요법</button>
+    <button class="ad-tab" role="tab" data-tab="week" data-n="04" aria-selected="false">7일 수면·감정 조절 프로그램</button>
+  </div>
+
+  <section class="ad-panel" data-panel="features" id="ad-features">
+    <div class="ad-sechead"><span class="ad-kicker">SECTION 01</span><h2 class="ad-sectitle">병의 특징</h2></div>
+    <div class="ad-grid">
+      <div class="ad-card"><span class="ad-label" data-source="criteria" data-field="label" data-where="id=threshold_17">—</span><span class="ad-big" data-source="criteria" data-field="value" data-where="id=threshold_17">—</span><span class="ad-unit" data-source="criteria" data-field="unit" data-where="id=threshold_17"></span><span class="ad-cap" data-source="criteria" data-field="plain" data-where="id=threshold_17"></span></div>
+      <div class="ad-card"><span class="ad-label" data-source="criteria" data-field="label" data-where="id=onset_age">—</span><span class="ad-big" data-source="criteria" data-field="value" data-where="id=onset_age">—</span><span class="ad-unit" data-source="criteria" data-field="unit" data-where="id=onset_age"></span><span class="ad-cap" data-source="criteria" data-field="plain" data-where="id=onset_age"></span></div>
+      <div class="ad-card"><span class="ad-label" data-source="criteria" data-field="label" data-where="id=settings">—</span><span class="ad-big" data-source="criteria" data-field="value" data-where="id=settings">—</span><span class="ad-unit" data-source="criteria" data-field="unit" data-where="id=settings"></span><span class="ad-cap" data-source="criteria" data-field="plain" data-where="id=settings"></span></div>
+      <div class="ad-card"><span class="ad-label" data-source="criteria" data-field="label" data-where="id=duration">—</span><span class="ad-big" data-source="criteria" data-field="value" data-where="id=duration">—</span><span class="ad-unit" data-source="criteria" data-field="unit" data-where="id=duration"></span><span class="ad-cap" data-source="criteria" data-field="plain" data-where="id=duration"></span></div>
+      <div class="ad-card"><span class="ad-label" data-source="criteria" data-field="label" data-where="id=median_dx">—</span><span class="ad-big" data-source="criteria" data-field="value" data-where="id=median_dx">—</span><span class="ad-unit" data-source="criteria" data-field="unit" data-where="id=median_dx"></span><span class="ad-cap" data-source="criteria" data-field="plain" data-where="id=median_dx"></span></div>
+    </div>
+
+    <div class="ad-card">
+      <h2>증상 목록과 SELF CHECK</h2>
+      <p class="ad-note">설명 칸은 이해를 돕기 위해 Claude가 풀어 쓴 문장이에요.</p>
+      <div class="ad-pick">
+        <button type="button" class="ad-pickbtn ad-pick-in" data-group="부주의" aria-pressed="false"><b>부주의</b><span>집중 유지·정리·기억과 관련된 증상</span></button>
+        <button type="button" class="ad-pickbtn ad-pick-hy" data-group="과잉행동·충동" aria-pressed="false"><b>과잉행동·충동</b><span>가만히 있기 어렵거나 성급하게 행동하는 증상</span></button>
+      </div>
+      <p class="ad-hint" id="ad-hint">위 박스를 선택하면 해당 증상 목록이 나와요.</p>
+      <div class="ad-scroll" id="ad-symwrap" hidden>
+        <table id="ad-t-symptoms" data-source="symptoms" data-row-key="symptom">
+          <thead><tr><th>번호</th><th>해당 여부</th><th data-field="symptom">증상</th><th data-field="group">묶음</th><th data-field="plain">쉬운 설명</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="ad-result" id="ad-result" hidden></div>
+    </div>
+  </section>
+
+  <section class="ad-panel" data-panel="treatment" id="ad-treatment" hidden>
+    <div class="ad-sechead"><span class="ad-kicker">SECTION 02</span><h2 class="ad-sectitle">치료 과정</h2></div>
+    <div class="ad-card">
+      <h2>나이별 치료 방향</h2>
+      <p class="ad-note">청록색으로 강조된 줄이 지금 해당하는 나이대예요.</p>
+      <div class="ad-scroll">
+        <table id="ad-t-treatment" data-source="treatment" data-row-key="age_group">
+          <thead><tr><th data-field="age_group">대상</th><th data-field="first_line">기본 방향</th><th data-field="details">설명</th><th data-field="source">출처</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="ad-card">
+      <h2>치료가 진행되는 순서</h2>
+      <p class="ad-note">병원마다 조금씩 다를 수 있어요. 진단과 약 처방은 반드시 의사가 해요.</p>
+      <div class="ad-scroll">
+        <table id="ad-t-journey" data-source="journey" data-row-key="step">
+          <thead><tr><th data-field="step">단계</th><th data-field="what">하는 일</th><th data-field="plain">쉽게 말하면</th><th data-field="source">출처</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="ad-card">
+      <h2>새 치료약 소식 (2026 업데이트)</h2>
+      <p class="ad-note">붙여넣어 주신 Gemini 답변을 다른 자료와 맞춰 본 결과예요. 각성제는 뇌를 깨워 집중을 돕는 약(콘서타 등), 비각성제는 각성제가 아닌 계열의 약이에요. 약을 고르는 일은 담당 의사가 해요.</p>
+      <div class="ad-legend"><span style="--sw:var(--color-ok)"><i></i>확인됨</span><span style="--sw:var(--amber)"><i></i>일부 다름</span><span style="--sw:var(--color-fg-muted)"><i></i>확인 안 됨</span></div>
+      <div class="ad-scroll">
+        <table id="ad-t-drugs" data-source="new_drugs" data-row-key="item">
+          <thead><tr><th data-field="item">약·내용</th><th data-field="what">어떤 약인가요</th><th data-field="ages">대상</th><th data-field="note">확인된 내용</th><th data-field="check">확인 결과</th><th data-field="source">출처</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="ad-card">
+      <h2>함께 있는 문제(동반질환)별 치료 방향</h2>
+      <p class="ad-note">동반질환은 ADHD와 함께 나타나는 다른 병이에요. 아래 자료는 등급을 매기지 않은 전문가 검토 글이라 참고용으로 봐요.</p>
+      <div class="ad-legend"><span style="--sw:var(--color-ok)"><i></i>확인됨</span><span style="--sw:var(--amber)"><i></i>일부 다름</span><span style="--sw:var(--color-fg-muted)"><i></i>확인 안 됨</span></div>
+      <div class="ad-scroll">
+        <table id="ad-t-comorbid" data-source="comorbid" data-row-key="item">
+          <thead><tr><th data-field="item">동반 문제</th><th data-field="gemini">Gemini 답변</th><th data-field="found">확인된 내용</th><th data-field="check">확인 결과</th><th data-field="source">출처</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="ad-card">
+      <h2>약을 먹을 때 생길 수 있는 불편</h2>
+      <p class="ad-note">약마다 다르고 사람마다 달라요. 이상하면 참지 말고 의사에게 알려요.</p>
+      <div class="ad-scroll">
+        <table id="ad-t-side" data-source="side_effects" data-row-key="effect">
+          <thead><tr><th data-field="effect">불편한 점</th><th data-field="helps">도움이 되는 방법</th><th data-field="source">출처</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="ad-card">
+      <h2>일상 관리 보강</h2>
+      <p class="ad-note">심장 두근거림 대처와 정리 환경에 대한 Gemini 내용이에요. 출처가 확인되지 않은 항목은 회색으로 표시했어요.</p>
+      <div class="ad-legend"><span style="--sw:var(--color-ok)"><i></i>확인됨</span><span style="--sw:var(--amber)"><i></i>일부 다름</span><span style="--sw:var(--color-fg-muted)"><i></i>확인 안 됨</span></div>
+      <div class="ad-scroll">
+        <table id="ad-t-daily" data-source="daily" data-row-key="item">
+          <thead><tr><th data-field="item">항목</th><th data-field="tip">방법</th><th data-field="check">확인 결과</th><th data-field="source">출처</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="ad-card">
+      <h2>화날 때·미룰 때·잠들기 어려울 때 연습 (참고)</h2>
+      <p class="ad-note">분노 조절과 과잉행동이 힘들다고 하셔서 첨부 내용 중 생활 연습만 골랐어요. 성인 기준의 일반적인 생활 조언이고 이번에 근거를 확인하지는 못했어요. 약을 대신하지 못하고, 담당 의사나 상담 선생님과 함께 맞춰 가는 것이 좋아요.</p>
+      <div class="ad-legend"><span style="--sw:var(--color-ok)"><i></i>확인됨</span><span style="--sw:var(--amber)"><i></i>일부 다름</span><span style="--sw:var(--color-fg-muted)"><i></i>확인 안 됨</span></div>
+      <div class="ad-scroll">
+        <table id="ad-t-skills" data-source="skills" data-row-key="item">
+          <thead><tr><th data-field="item">연습</th><th data-field="how">방법</th><th data-field="check">확인 결과</th><th data-field="source">출처</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="ad-panel" data-panel="diet" id="ad-diet" hidden>
+    <div class="ad-sechead"><span class="ad-kicker">SECTION 03</span><h2 class="ad-sectitle">식이요법</h2></div>
+    <p class="ad-warn">식이요법은 약물치료와 행동치료를 대신하지 못하고, 곁에서 돕는 수단이에요. 특히 키가 크고 있는 시기에는 음식을 많이 제한하면 영양이 부족해질 수 있어서, 시작하기 전에 담당 의사나 영양사와 상의하는 것이 안전해요.</p>
+
+    <div class="ad-grid ad-diet-grid">
+      <div class="ad-card"><span class="ad-label" data-source="criteria" data-field="label" data-where="id=elim_resp">—</span><span class="ad-big" data-source="criteria" data-field="value" data-where="id=elim_resp">—</span><span class="ad-unit" data-source="criteria" data-field="unit" data-where="id=elim_resp"></span><span class="ad-cap" data-source="criteria" data-field="plain" data-where="id=elim_resp"></span></div>
+      <div class="ad-card"><span class="ad-label" data-source="criteria" data-field="label" data-where="id=elim_effect">—</span><span class="ad-big" data-source="criteria" data-field="value" data-where="id=elim_effect">—</span><span class="ad-unit" data-source="criteria" data-field="unit" data-where="id=elim_effect"></span><span class="ad-cap" data-source="criteria" data-field="plain" data-where="id=elim_effect"></span></div>
+      <div class="ad-card"><span class="ad-label" data-source="criteria" data-field="label" data-where="id=elim_trials">—</span><span class="ad-big" data-source="criteria" data-field="value" data-where="id=elim_trials">—</span><span class="ad-unit" data-source="criteria" data-field="unit" data-where="id=elim_trials"></span><span class="ad-cap" data-source="criteria" data-field="plain" data-where="id=elim_trials"></span></div>
+      <div class="ad-card"><span class="ad-label" data-source="criteria" data-field="label" data-where="id=elim_participants">—</span><span class="ad-big" data-source="criteria" data-field="value" data-where="id=elim_participants">—</span><span class="ad-unit" data-source="criteria" data-field="unit" data-where="id=elim_participants"></span><span class="ad-cap" data-source="criteria" data-field="plain" data-where="id=elim_participants"></span></div>
+    </div>
+
+    <div class="ad-card">
+      <h2>식이 방법별 근거</h2>
+      <p class="ad-note">근거가 탄탄한 순서가 아니라 알아두면 좋은 순서로 모았어요. 근거 수준 칸의 색을 확인하세요.</p>
+      <div class="ad-legend"><span style="--sw:var(--color-ok)"><i></i>가장 탄탄</span><span style="--sw:var(--c0)"><i></i>연관성 확인</span><span style="--sw:var(--amber)"><i></i>일부에게만 효과</span><span style="--sw:var(--c3)"><i></i>임상 조언</span><span style="--sw:var(--color-bad)"><i></i>주의할 점</span></div>
+      <div class="ad-scroll">
+        <table id="ad-t-diet" data-source="diet" data-row-key="approach">
+          <thead><tr><th data-field="approach">방법</th><th data-field="evidence">근거 수준</th><th data-field="found">연구에서 확인된 것</th><th data-field="caution">주의할 점</th><th data-field="source">출처</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="ad-card">
+      <h2>영양제 5가지 비교 (철분·오메가3·아연·마그네슘·비타민 D)</h2>
+      <p class="ad-note">첨부해 주신 ChatGPT 내용을 확인한 결과예요. 영양제는 부족한 영양소를 채우는 것이고, ADHD 약물치료를 대신하지 못해요. 먹기 전에 검사로 부족한지 확인하고 의사나 약사와 상의해요. 첨부 내용 중 성인 기준 부분은 만 17세에게 그대로 맞지 않을 수 있어요.</p>
+      <div class="ad-legend"><span style="--sw:var(--color-ok)"><i></i>확인됨</span><span style="--sw:var(--amber)"><i></i>일부 다름</span><span style="--sw:var(--color-fg-muted)"><i></i>확인 안 됨</span></div>
+      <div class="ad-scroll">
+        <table id="ad-t-supp" data-source="supplements" data-row-key="item">
+          <thead><tr><th data-field="item">영양제</th><th data-field="effect">ADHD 연구 결과</th><th data-field="evidence">근거 수준</th><th data-field="caution">주의할 점</th><th data-field="check">확인 결과</th><th data-field="source">출처</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="ad-panel" data-panel="week" id="ad-week" hidden>
+    <div class="ad-sechead"><span class="ad-kicker">SECTION 04</span><h2 class="ad-sectitle">7일 수면·감정 조절 프로그램</h2></div>
+    <p class="ad-warn">성인 ADHD 기준으로 만든 ChatGPT 프로그램을 정리한 내용이에요. 일반적인 생활 연습이라 이번에 근거를 확인하지는 못했고, 약물치료와 행동치료를 대신하지 못해요. 학생 생활에 맞게 시간은 조정하고, 힘들면 담당 의사와 상의해요.</p>
+
+    <div class="ad-grid">
+      <div class="ad-card"><span class="ad-label" data-source="week_meta" data-field="label" data-where="id=days">—</span><span class="ad-big" data-source="week_meta" data-field="value" data-where="id=days">—</span><span class="ad-unit" data-source="week_meta" data-field="unit" data-where="id=days"></span><span class="ad-cap" data-source="week_meta" data-field="plain" data-where="id=days"></span></div>
+      <div class="ad-card"><span class="ad-label" data-source="week_meta" data-field="label" data-where="id=minutes">—</span><span class="ad-big" data-source="week_meta" data-field="value" data-where="id=minutes">—</span><span class="ad-unit" data-source="week_meta" data-field="unit" data-where="id=minutes"></span><span class="ad-cap" data-source="week_meta" data-field="plain" data-where="id=minutes"></span></div>
+      <div class="ad-card"><span class="ad-label" data-source="week_meta" data-field="label" data-where="id=core">—</span><span class="ad-big" data-source="week_meta" data-field="value" data-where="id=core">—</span><span class="ad-unit" data-source="week_meta" data-field="unit" data-where="id=core"></span><span class="ad-cap" data-source="week_meta" data-field="plain" data-where="id=core"></span></div>
+    </div>
+
+    <div class="ad-card">
+      <h2>매일 공통으로 지킬 기본 루틴</h2>
+      <p class="ad-note">7일 동안 아침, 낮, 밤 세 가지를 기본으로 유지해요.</p>
+      <div class="ad-scroll">
+        <table id="ad-t-routine" data-source="week_text" data-row-key="key">
+          <thead><tr><th data-field="item">시간대</th><th data-field="how">할 일</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="ad-card">
+      <h2>요일별 실천 프로그램</h2>
+      <p class="ad-note">날짜 박스를 선택하면 그날의 목표와 할 일이 나와요. 하루 20~30분이면 충분해요.</p>
+      <div class="ad-daybar" id="ad-daybar" data-source="program_days"></div>
+      <div class="ad-daybody" id="ad-daybody" data-source="program_days">
+        <h3 id="ad-day-title"></h3>
+        <p class="ad-goal" id="ad-day-goal"></p>
+        <div class="ad-scroll">
+          <table id="ad-t-steps" data-source="program_steps" data-row-key="key">
+            <thead><tr><th>순서</th><th>시간</th><th data-field="activity">할 일</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="ad-exbox"><b id="ad-ex-title"></b><ul id="ad-ex-list"></ul></div>
+        <p class="ad-daynote" id="ad-day-note"></p>
+      </div>
+    </div>
+
+    <div class="ad-card">
+      <h2>7일간 변화 기록</h2>
+      <p class="ad-note">매일 자기 전에 네 가지를 0~10점으로 적어요. 점수가 낮아지는 것이 좋은 방향이에요. 하루의 점수보다 7일 동안의 흐름을 봐요. 입력한 점수는 새로고침하면 사라져요.</p>
+      <div class="ad-scroll">
+        <table id="ad-t-tracker" class="ad-tracker" data-source="tracker_items" data-row-key="key">
+          <thead><tr><th data-field="label">항목</th><th>1일</th><th>2일</th><th>3일</th><th>4일</th><th>5일</th><th>6일</th><th>7일</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="ad-legend" id="ad-chart-legend"></div>
+      <div class="ad-chartbox" id="ad-chart" data-source="tracker_items"></div>
+    </div>
+
+    <div class="ad-card">
+      <h2>꼭 기억할 수면 관리 원칙</h2>
+      <div class="ad-scroll">
+        <table id="ad-t-rules" data-source="week_text" data-row-key="key">
+          <thead><tr><th data-field="item">원칙</th><th data-field="how">설명</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="ad-alert">진료가 필요한 신호: 잠들기 어려운 문제가 계속되거나 낮에 생활이 힘들 정도면 수면클리닉이나 정신건강의학과에서 평가를 받아요. 잠이 크게 줄었는데도 피곤하지 않고 에너지가 이상하게 높아지거나 생각과 말이 빨라지는 시기가 있으면, 단순한 불면증으로만 생각하지 말고 진료를 받아요.</p>
+
+    <div class="ad-card">
+      <h2>가장 중요한 핵심 습관 3가지</h2>
+      <div class="ad-scroll">
+        <table id="ad-t-core" data-source="week_text" data-row-key="key">
+          <thead><tr><th data-field="item">습관</th><th data-field="how">왜 중요한가요</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <p class="ad-foot">이 페이지는 일반적인 건강 정보예요. 진단과 치료, 약, 식이 조절은 담당 의사와 상의해서 결정해요. 자료: AAP(미국소아과학회) ADHD 지침과 요약, DSM-5 진단 기준(AAP EQIPP), Understood.org, Psychiatric Times, Drugs.com, MDedge, Consultant360, J Clin Psychiatry(오메가3 메타분석 2023), PubMed(철분 체계적 고찰 2024), 영국 NICE 지침, ChatGPT 공유 내용(7일 프로그램), Oxford Textbook of ADHD, Vinmec, Dr. Lewis. 신약 정보는 미국 FDA 기준이고 한국 허가는 확인하지 못했어요.</p>
+</div>
+<script>
+(function () {
+  var DATA = {"criteria": [{"id": "threshold_17", "label": "진단 기준 증상 수 (만 17세 이상)", "value": 5, "unit": "개 이상", "plain": "부주의 9개 또는 과잉행동·충동 9개 중 한쪽에서 해당돼야 해요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"id": "threshold_u17", "label": "(참고) 만 17세 미만 기준", "value": 6, "unit": "개 이상", "plain": "17세 미만은 기준이 조금 더 엄격해요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"id": "onset_age", "label": "증상이 시작된 시기", "value": 12, "unit": "세 이전", "plain": "알아챈 건 나중이어도 시작은 12세 이전이어야 해요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"id": "settings", "label": "증상이 나타나는 장소", "value": 2, "unit": "곳 이상", "plain": "집·학교·친구 관계 등 두 군데 이상에서 나타나야 해요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"id": "duration", "label": "증상이 이어진 기간", "value": 6, "unit": "개월 이상", "plain": "일상생활에 지장을 줄 만큼 6개월 넘게 이어져야 해요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"id": "inattention_n", "label": "부주의 증상 목록 수", "value": 9, "unit": "개", "plain": "집중 유지·정리·기억과 관련된 증상", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"id": "hyper_n", "label": "과잉행동·충동 증상 목록 수", "value": 9, "unit": "개", "plain": "가만히 있기 어렵거나 성급하게 행동하는 증상", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"id": "median_dx", "label": "진단받는 중앙 나이", "value": 7, "unit": "세", "plain": "대부분 어릴 때 진단받아요. 크면서 과잉행동은 줄고 부주의는 남는 경향이 있어요", "source": "IAP P.E.A.R.L.S 2021 (AAP 지침 요약)"}, {"id": "elim_resp", "label": "제거식이에 반응할 가능성 (최대)", "value": 30, "unit": "%", "plain": "특정 음식을 빼는 식이요법이 일부에게는 효과가 있지만 개인차가 커요", "source": "Psychiatric Times, The Influence of Diet on ADHD"}, {"id": "elim_effect", "label": "제거식이 효과 크기", "value": 0.29, "unit": "", "plain": "여러 연구를 합친 값이에요. 0에 가까울수록 효과가 작고, 0.29는 작은 편이에요", "source": "Vinmec (Catalá-López 등 인용)"}, {"id": "elim_trials", "label": "효과 크기를 낸 통제 연구", "value": 6, "unit": "건", "plain": "비교 집단을 둔 연구만 모은 수예요", "source": "Vinmec (Catalá-López 등 인용)"}, {"id": "elim_participants", "label": "그 연구들의 참가자", "value": 195, "unit": "명", "plain": "규모가 크지 않아 결과를 조심해서 봐야 해요", "source": "Vinmec (Catalá-López 등 인용)"}], "symptoms": [{"group": "부주의", "symptom": "부주의한 실수", "plain": "꼼꼼히 해야 할 때 사소한 실수가 잦아요 (문제 잘못 읽기 등)", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "부주의", "symptom": "집중 유지 어려움", "plain": "수업·공부·독서에 오래 집중하기 힘들어요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "부주의", "symptom": "말을 듣고도 흘려들음", "plain": "직접 말해도 딴생각 중인 것처럼 보여요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "부주의", "symptom": "과제를 끝까지 못 함", "plain": "시작은 해도 마무리를 못 해요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "부주의", "symptom": "정리·계획 어려움", "plain": "시간 관리, 물건 정리, 순서 짜기가 서툴러요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "부주의", "symptom": "오래 머리 쓸 일 회피", "plain": "긴 글 읽기, 숙제처럼 집중이 오래 필요한 일을 피해요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "부주의", "symptom": "물건 자주 잃어버림", "plain": "폰·교재·준비물을 자주 잃어버려요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "부주의", "symptom": "쉽게 산만해짐", "plain": "작은 소리나 움직임에도 주의가 흩어져요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "부주의", "symptom": "자주 깜빡함", "plain": "해야 할 일이나 약속을 잊어버려요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "과잉행동·충동", "symptom": "안절부절 못함", "plain": "손발을 계속 움직이거나 몸을 꼼지락거려요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "과잉행동·충동", "symptom": "자리를 뜸", "plain": "앉아 있어야 할 때 자리에서 일어나요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "과잉행동·충동", "symptom": "가만히 못 있는 느낌", "plain": "몸이나 마음이 계속 들떠 있어요 (청소년은 속으로만 느끼기도 해요)", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "과잉행동·충동", "symptom": "조용한 활동이 힘듦", "plain": "조용히 하는 활동에 참여하기 어려워요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "과잉행동·충동", "symptom": "늘 움직이는 듯함", "plain": "쉬지 않고 계속 움직여요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "과잉행동·충동", "symptom": "말이 지나치게 많음", "plain": "필요 이상으로 말을 많이 해요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "과잉행동·충동", "symptom": "질문 끝나기 전에 대답", "plain": "성급하게 답부터 내뱉어요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "과잉행동·충동", "symptom": "차례 기다리기 힘듦", "plain": "줄 서기, 순서 기다리기가 어려워요", "source": "AAP EQIPP (DSM-5 진단 기준)"}, {"group": "과잉행동·충동", "symptom": "남의 말·활동에 끼어듦", "plain": "대화나 놀이에 불쑥 끼어들어요", "source": "AAP EQIPP (DSM-5 진단 기준)"}], "treatment": [{"age_group": "취학 전 아동", "first_line": "행동치료 먼저", "details": "부모나 교사가 함께하는 행동치료가 우선이에요. 호전이 부족하고 생활이 많이 힘들면 메틸페니데이트(자극제 계열 약)를 고려해요.", "you": "no", "source": "AAFP (AAP 지침 요약)"}, {"age_group": "6~11세", "first_line": "약물치료 (+행동치료)", "details": "약을 쓰되, 가능하면 행동치료와 함께 해요.", "you": "no", "source": "AAFP (AAP 지침 요약)"}, {"age_group": "12~18세 (해당)", "first_line": "약물치료 + 행동치료", "details": "본인이 약 복용에 동의한 경우에 해당해요. 운전할 때도 증상이 조절되도록 오래 가는 약이나 늦은 오후용 짧은 약을 쓰기도 해요.", "you": "yes", "source": "AAFP (AAP 지침 요약)"}, {"age_group": "진단 기준에 못 미칠 때", "first_line": "행동치료만 가능", "details": "행동치료는 정확한 진단이 없어도 할 수 있지만, 약은 진단 기준을 채울 때만 처방해요.", "you": "no", "source": "AAFP (AAP 지침 요약)"}], "journey": [{"step": "1. 평가·진단", "what": "증상이 진단 기준에 맞는지 확인하고, 불안·우울 같은 함께 나타나는 문제도 살펴봐요.", "plain": "학교와 집에서의 모습을 종합해서 판단해요.", "source": "AAP 지침 · AAP EQIPP"}, {"step": "2. 치료 계획 세우기", "what": "12~18세는 약물치료와 행동치료를 함께 하는 쪽을 권해요. 본인의 동의가 중요해요.", "plain": "약만 먹는 게 아니라 생활 습관과 공부 방법도 같이 바꿔요.", "source": "AAFP (AAP 지침 요약)"}, {"step": "3. 약 용량 맞추기", "what": "효과와 부작용을 보면서 용량을 조금씩 조절해요.", "plain": "처음부터 정답 용량이 있는 게 아니라 나에게 맞는 양을 찾아가요.", "source": "AAP 지침"}, {"step": "4. 부작용 관리", "what": "잠, 식욕, 두통·복통, 기분 변화를 점검해요.", "plain": "불편한 점은 참지 말고 바로 말해요.", "source": "Understood.org"}, {"step": "5. 정기 점검", "what": "문제가 계속되면 의사가 복용 시간이나 용량을 바꾸거나 다른 약으로 바꿀 수 있어요.", "plain": "학교생활, 기분, 잠 변화를 기록해서 가져가면 도움이 돼요.", "source": "Understood.org"}], "side_effects": [{"effect": "수면 문제", "helps": "자기 전에 마음을 가라앉히는 루틴을 만들어요. 4~6주 안에 좋아지는 경우가 많아요.", "source": "Understood.org"}, {"effect": "식욕 저하·체중 감소", "helps": "약 효과가 있는 동안 입맛이 줄고, 약기운이 빠지는 저녁에 돌아오는 경우가 많아요. 저녁에 먹을 건강한 간식을 미리 준비해요.", "source": "Understood.org"}, {"effect": "두통·복통", "helps": "속이 불편하면 음식과 함께 먹어요. 몇 주 안에 줄어드는 경우가 많아요.", "source": "Understood.org"}, {"effect": "약기운 빠질 때 짜증", "helps": "의사에게 알리면 복용 시간이나 용량을 조정할 수 있어요.", "source": "Understood.org"}, {"effect": "기분 변화·불안", "helps": "오래 가면 얼마나 자주, 얼마나 심한지 기록해서 의사에게 알려요.", "source": "Understood.org"}, {"effect": "드문 반응 (틱 등)", "helps": "몸이 저절로 움찔하는 틱이나 성격이 달라진 느낌이 들면 의사와 상의해요.", "source": "Understood.org"}], "diet": [{"approach": "지중해식 식단", "evidence": "연관성 확인 (관찰 연구)", "found": "채소·과일·통곡물·생선 중심 식사예요. 실행 기능(계획하고 조절하는 능력)과 가장 일관되게 연관돼요. 다만 대부분 관찰 연구라 원인이라고 단정할 수는 없어요.", "caution": "약을 대신하지 않아요. 평소 식사의 기본 틀로 삼기 좋아요.", "source": "Dr. Lewis, Dietary Patterns and ADHD"}, {"approach": "가공식품·인공색소 줄이기 + 오메가3", "evidence": "일부 연구에서만 효과 (영국 지침은 권하지 않음)", "found": "가공식품과 색소를 줄이고 오메가3를 보충하면 증상이 줄 수 있다는 보고가 있어요. 하지만 22개 연구(1,789명)를 합친 분석에서 오메가3는 전체로는 뚜렷한 효과가 없었고, 4개월 이상 먹은 연구만 모으면 작은 효과가 있었어요. 색소·보존제만 뺀 연구는 근거에 빈틈이 있어요.", "caution": "영국 NICE 지침은 아동·청소년 ADHD 치료 목적으로 오메가3·6 지방산 보충제를 권하지 않아요. 색소·첨가물을 일률적으로 빼라고도 하지 않아요. 보충제는 먹기 전에 의사나 약사와 상의해요.", "source": "Psychiatric Times · Oxford Textbook of ADHD · J Clin Psychiatry 메타분석(2023) · NICE"}, {"approach": "제거식이 (소수 음식만 먹기)", "evidence": "일부에게만 효과", "found": "일부 아이에게 뚜렷한 효과가 있었지만 연구 설계의 한계가 있고, 2024년 이후에는 반응하는 사람이 예전 생각보다 적을 수 있다는 평가가 나왔어요.", "caution": "성장기에는 영양 부족 위험이 있어요. NICE도 소수 음식만 먹는 식단의 장기 효과와 위험에 대한 근거가 없다고 해요. 특정 음식과 행동의 관련이 의심되면 음식 일기를 쓰고 영양사와 함께 진행해요. 혼자 시도하지 마세요.", "source": "Psychiatric Times · Dr. Lewis · NICE"}, {"approach": "약 먹는 날의 식사 요령", "evidence": "임상 조언", "found": "약 효과가 있는 낮에는 입맛이 줄 수 있어요. 아침을 챙기고, 약기운이 빠지는 저녁에 건강한 간식과 식사로 부족한 양을 채워요.", "caution": "체중이 계속 줄면 의사에게 알려요.", "source": "Understood.org"}], "new_drugs": [{"item": "센타나파딘 (상품명 Simtriyo)", "what": "도파민·노르에피네프린·세로토닌 세 가지를 함께 조절하는 새 계열 약이에요. 하루 한 번 먹는 서방형(천천히 녹아 오래 가는) 알약이에요.", "ages": "6세 이상, 체중 약 20kg(44파운드) 이상", "note": "2026년 7월 미국 FDA 승인이 발표됐어요. 6주 임상시험에서 가짜 약(위약)보다 증상이 의미 있게 줄었어요. 흔한 부작용은 식욕 감소, 두통, 구역, 발진이에요.", "check": "확인됨 (미국 기준)", "source": "Psychiatric Times (2026.7) · Understood.org"}, {"item": "센타나파딘은 부작용 부담이 적다?", "what": "Gemini 답변은 불안, 감정 기복, 식욕 저하 부담이 줄었다고 했어요.", "ages": "-", "note": "식욕 감소는 임상시험에서 가장 흔한 부작용이었어요(어른 약 6.5%, 6~12세 약 5%). 수면·식욕 문제가 기존 약보다 적다는 평가는 있지만, 약끼리 직접 비교한 시험은 아직 없어요. 6~12세에서 자살 생각·행동이 늘 수 있다는 경고와 남용 가능성 경고도 라벨에 있어요.", "check": "일부 다름", "source": "Understood.org · Psychiatric Times"}, {"item": "오니다 XR (클로니딘 액상)", "what": "알약을 삼키기 힘든 아이를 위한 액상 서방형 약이에요. 각성제가 아닌 비각성제이고, 밤에 한 번 먹어요.", "ages": "6세 이상", "note": "2026년 새 약이 아니라 2024년 5월에 승인된 약이에요. 각성제와 함께 쓸 수도 있어요.", "check": "일부 다름 (2026 신약 아님)", "source": "Drugs.com"}, {"item": "한국 출시·허가", "what": "이번 조사에서는 한국 허가와 판매 여부를 확인하지 못했어요.", "ages": "-", "note": "미국에서도 마약류 분류(DEA 스케줄 지정) 이후 출시된다고 했어요(2026년 8월 기준 자료). 한국에서 쓸 수 있는지는 담당 의사에게 확인해요.", "check": "확인 안 됨", "source": "Understood.org"}], "comorbid": [{"item": "틱장애 동반", "gemini": "아토목세틴 등 비각성제를 먼저 고려해요 (틱이 나빠지는 것을 막으려고)", "found": "알파2 작용제(구아판신·클로니딘)는 ADHD와 틱에 모두 쓰여서 우선 후보예요. 아토목세틴은 틱을 악화시키지 않고 줄일 수도 있어요. 각성제는 틱을 일시적으로 늘릴 수 있지만 장기 경과는 바꾸지 않았다고 보고돼요.", "check": "일부 다름", "source": "MDedge (Cleveland Clinic J Med)"}, {"item": "불안장애 동반", "gemini": "오래 가는 각성제를 저용량부터 쓰거나 항우울제(SSRI/SNRI)를 같이 써요", "found": "아토목세틴을 먼저 권해요. 대안은 SSRI(항우울제)와 각성제 또는 알파2 작용제를 함께 쓰고 인지행동치료(CBT)를 더하는 방법이에요. 각성제 저용량이 우선이라는 내용은 이 자료에서 확인하지 못했어요.", "check": "일부 다름", "source": "MDedge (Cleveland Clinic J Med)"}, {"item": "중등도 이상 우울증 동반", "gemini": "우울 증상을 먼저 치료하고 ADHD 약을 추가해요", "found": "기분 장애를 먼저 치료하면 ADHD 증상이 함께 좋아질 수 있다고 해요. 주요 우울증에는 부프로피온(허가 외 사용) 후 각성제, 또는 SSRI와 각성제를 쓰는 방법이 소개돼요.", "check": "확인됨", "source": "MDedge (Cleveland Clinic J Med)"}], "daily": [{"item": "심장 두근거림·빠른 맥박", "tip": "낮은 용량에서 시작해 천천히 올리고, 하루 한 번 오래 가는 약을 우선해요. 계속되면 용량을 줄이거나, 다른 각성제로 바꾸거나, 비각성제를 써요. 알파2 작용제는 맥박과 혈압을 계속 재야 하고, 아토목세틴은 심한 심장 질환이 있으면 피해요. 시작 전 본인·가족의 심장 병력을 확인해요.", "check": "확인됨", "source": "Consultant360"}, {"item": "눈에 보이는 정리 시스템과 타이머", "tip": "투명 수납함, 뚜껑 없는 책상 정리, 타임 타이머(남은 시간이 눈에 보이는 타이머)로 계획하고 시작하는 부담을 줄이는 방법이에요.", "check": "확인 안 됨", "source": "Gemini 공유 답변 (출처 미확인)"}], "supplements": [{"item": "오메가3 (EPA·DHA)", "effect": "22개 무작위 연구(1,789명)를 합친 2023년 분석에서 ADHD 핵심 증상은 전체로는 유의하게 좋아지지 않았어요(p=0.07). 4개월 이상 먹은 연구만 모으면 작은 효과가 있었어요(효과 크기 −0.35).", "evidence": "낮음·엇갈림", "caution": "영국 NICE 지침은 아동·청소년 ADHD 치료 목적으로 지방산 보충제를 권하지 않아요. 약을 먹고 있거나 출혈 위험이 있으면 먹기 전에 의사와 상의해요.", "check": "확인됨", "source": "J Clin Psychiatry 메타분석(2023) · NICE"}, {"item": "철분", "effect": "ADHD 아동·청소년 철분 보충 연구를 모은 2024년 체계적 고찰에서 증상 개선의 차이가 통계적으로 유의하지 않았고, 근거의 확실성은 매우 낮았어요.", "evidence": "매우 낮음", "caution": "검사에서 철분(페리틴)이 부족할 때 결핍을 바로잡는 것은 별개의 문제예요. ADHD 증상만을 이유로 고용량을 먹지 마세요. 과량 복용은 사망에 이를 수 있다고 경고해요.", "check": "확인됨", "source": "PubMed 체계적 고찰(2024)"}, {"item": "아연", "effect": "결핍이 있으면 보충을 고려하지만 ADHD 치료 효과는 확립되지 않았다는 내용이에요.", "evidence": "이번에 확인 못 함", "caution": "과다 복용하면 구리 결핍이 생길 수 있다는 설명이 있었어요.", "check": "확인 안 됨", "source": "ChatGPT 공유 내용 (출처 미확인)"}, {"item": "마그네슘", "effect": "ADHD 개선 근거가 매우 제한적이라는 내용이에요. 결핍이 있을 때 고려해요.", "evidence": "이번에 확인 못 함", "caution": "설사·복통이 생길 수 있고 신장이 좋지 않으면 주의해야 한다는 설명이 있었어요. 용량은 나이별로 달라서 의사·약사에게 확인해요.", "check": "확인 안 됨", "source": "ChatGPT 공유 내용 (출처 미확인)"}, {"item": "비타민 D", "effect": "부족하면 보충하는 것이 좋고, 정상 수치에서 더 먹는 효과는 불확실하다는 내용이에요.", "evidence": "이번에 확인 못 함", "caution": "오래 고용량을 먹으면 혈중 칼슘이 높아지고 신장이 상할 수 있다는 설명이 있었어요.", "check": "확인 안 됨", "source": "ChatGPT 공유 내용 (출처 미확인)"}], "skills": [{"item": "수면 리듬 먼저 잡기", "how": "잠드는 시간보다 기상 시간을 먼저 고정해요. 아침에 햇빛을 보고, 오후 늦게는 카페인을 피하고, 자기 1~2시간 전부터 자극적인 활동과 화면을 줄여요. 주말에도 기상 시간을 크게 바꾸지 않아요.", "check": "확인 안 됨", "source": "ChatGPT 공유 내용 (성인 기준, 일반 생활 조언)"}, {"item": "화가 날 때 3단계", "how": "① 감지: 심장이 빨리 뛰거나 목소리가 커지는 초기 신호를 알아차려요. ② 중단: 대화·메시지·결정을 10분 멈춰요. ③ 회복: 천천히 숨을 내쉬고 가라앉은 뒤 대화를 다시 시작해요. \"지금 감정이 올라와서 조금 진정하고 다시 이야기할게\"처럼 쓸 문장을 미리 정해둬요.", "check": "확인 안 됨", "source": "ChatGPT 공유 내용 (성인 기준, 일반 생활 조언)"}, {"item": "감정 기록하기", "how": "일어난 상황, 화의 세기(0~10), 하고 싶었던 행동, 실제 행동, 가라앉는 데 걸린 시간을 적어요. 어떤 상황에서 화가 오래 가는지 알 수 있어요. 진료 때 가져가면 도움이 돼요.", "check": "확인 안 됨", "source": "ChatGPT 공유 내용 (성인 기준, 일반 생활 조언)"}, {"item": "일 시작 연습 (미루기)", "how": "중요한 일을 10분만 먼저 시작하고, 10분 뒤 계속할지 정해요. 첫 행동을 아주 작게 만들어요(예: '공부하기' 대신 '책 펴고 한 페이지 읽기'). 재미있는 일은 금지하지 말고 순서만 뒤로 미뤄요.", "check": "확인 안 됨", "source": "ChatGPT 공유 내용 (성인 기준, 일반 생활 조언)"}, {"item": "같이 하기 (바디 더블링)", "how": "다른 사람과 같은 공간에서 각자 할 일을 해요. 가족과 함께, 친구와 온라인으로 하는 방법이 있어요. 누군가 옆에 있으면 시작하기가 쉬워질 수 있어요.", "check": "확인 안 됨", "source": "ChatGPT 공유 내용 (성인 기준, 일반 생활 조언)"}], "week_meta": [{"id": "days", "label": "실천 기간", "value": "7", "unit": "일", "plain": "처음부터 7일 모두 완벽하지 않아도 돼요. 핵심 습관 세 가지 중 하루에 하나만 성공해도 계속 이어가는 것이 중요해요.", "source": "ChatGPT 공유 내용 (성인 기준, 일반 생활 조언)"}, {"id": "minutes", "label": "하루 실천 시간", "value": "20~30", "unit": "분", "plain": "아침의 햇빛 쬐기나 낮의 산책은 따로 생활에 넣어요.", "source": "ChatGPT 공유 내용 (성인 기준, 일반 생활 조언)"}, {"id": "core", "label": "매일 유지할 기본 습관", "value": "3", "unit": "가지", "plain": "기상 시간 일정하게 하기, 감정이 올라와도 바로 반응하지 않기, 잠들기 전 긴장 풀기예요.", "source": "ChatGPT 공유 내용 (성인 기준, 일반 생활 조언)"}], "week_text": [{"key": "r1", "section": "routine", "item": "아침 · 기상 시간 고정", "how": "• 매일 비슷한 시간에 일어나요\n• 일어난 뒤 햇빛을 10~20분 쬐어요\n• 늦은 오후에는 카페인을 피해요"}, {"key": "r2", "section": "routine", "item": "낮 · 가벼운 몸 움직임", "how": "• 10~20분 걸어요\n• 공부나 일 중간에 짧게 쉬어요\n• 낮잠이 필요하면 짧게 자고, 늦은 오후는 피해요"}, {"key": "r3", "section": "routine", "item": "밤 · 수면 준비", "how": "• 잠들기 전 조명을 낮춰요\n• 걱정과 할 일을 종이에 적어요\n• 졸릴 때 잠자리에 들어요"}, {"key": "s1", "section": "rules", "item": "늦잠으로 보상하지 않기", "how": "잠을 못 잤다고 다음 날 늦잠으로 채우지 않아요."}, {"key": "s2", "section": "rules", "item": "오후 늦게 카페인 피하기", "how": "오후 늦게는 카페인이 든 음료를 먹지 않아요."}, {"key": "s3", "section": "rules", "item": "잠 오게 하려고 술·음료 쓰지 않기", "how": "술이나 카페인 음료를 잠들기 위한 수단으로 쓰지 않아요."}, {"key": "s4", "section": "rules", "item": "억지로 자려고 하지 않기", "how": "잠이 안 오는데 침대에서 계속 버티지 말고, 답답하면 나와서 조용한 활동을 하다가 졸릴 때 다시 누워요."}, {"key": "s5", "section": "rules", "item": "계속 불규칙하면 상담받기", "how": "수면 시간이 계속 불규칙하면 불면증 인지행동치료(CBT-I)를 상담해요. 단순한 수면 습관 관리보다 근거가 더 확실한 치료라고 설명한 내용이에요(이번에 확인하지 못함)."}, {"key": "c1", "section": "core", "item": "아침 기상 시간 고정", "how": "수면 리듬을 안정시키는 가장 중요한 출발점이에요."}, {"key": "c2", "section": "core", "item": "감정이 올라오면 잠시 멈추기", "how": "감정과 행동 사이에 시간을 만드는 연습이에요."}, {"key": "c3", "section": "core", "item": "중요한 일 10분 시작하기", "how": "동기가 생길 때까지 기다리지 않고 작은 행동부터 시작해요."}], "program_days": [{"day": "DAY 1", "title": "나의 감정과 수면 패턴 파악하기", "goal": "내가 언제 예민해지고 언제 잠들기 어려운지 알아봐요.", "ex_title": "기록 예시", "examples": "감정 유발 상황: 상대방의 지적|감정 강도: 8/10|진정되는 데 걸린 시간: 40분|수면 문제: 누워서 1시간 뒤 잠듦", "note": "나를 비난하지 않고 패턴을 관찰해요.", "source": "ChatGPT 공유 내용 (성인 기준, 일반 생활 조언)"}, {"day": "DAY 2", "title": "화가 날 때 멈추는 훈련", "goal": "감정이 행동으로 이어지는 시간을 늦춰요.", "ex_title": "호흡법과 대응 문장", "examples": "코로 편안하게 3~4초 들이마시고 5~6초 정도 천천히 내쉬어요. 무리하지 않고 5분 반복해요.|화가 났을 때 쓸 문장: \"지금은 감정이 너무 올라와 있으니 잠시 쉬었다가 이야기하자.\"", "note": "상대방에게서 잠시 떨어져 안전하고 조용한 곳으로 이동해도 좋아요.", "source": "ChatGPT 공유 내용 (성인 기준, 일반 생활 조언)"}, {"day": "DAY 3", "title": "잠들기 어려운 뇌 진정시키기", "goal": "누워서 생각이 계속 이어지는 문제를 줄여요.", "ex_title": "걱정 기록 예시", "examples": "걱정: 업무가 밀림 → 다음 행동: 내일 오전 10분 시작|걱정: 연락해야 할 사람 → 다음 행동: 오전에 알림 설정|걱정: 미래에 대한 걱정 → 지금 해결할 수 없는 일로 표시", "note": "잠이 오지 않는다고 침대에서 계속 버티지 마세요. 답답해지면 침대에서 나와 조용한 활동을 하다가 졸릴 때 다시 누워요.", "source": "ChatGPT 공유 내용 (성인 기준, 일반 생활 조언)"}, {"day": "DAY 4", "title": "미루는 습관을 끊는 10분 시작법", "goal": "재미있는 일에서 중요한 일로 넘어가는 힘을 키워요.", "ex_title": "첫 행동 예시", "examples": "보고서 작성 → 문서 열기|공부하기 → 책 한 페이지 읽기|운동하기 → 운동복 입기|청소하기 → 물건 5개 정리하기", "note": "완성하지 않아도 돼요. 시작했다면 성공이에요. 재미있는 활동은 중요한 일의 첫 10분을 마친 뒤에 즐겨요.", "source": "ChatGPT 공유 내용 (성인 기준, 일반 생활 조언)"}, {"day": "DAY 5", "title": "감정 회복 속도 높이기", "goal": "화가 난 뒤 감정을 오래 끌고 가지 않도록 연습해요.", "ex_title": "생각 다시 보기 예시", "examples": "사실: 상대방이 내 의견에 반대했다|자동으로 든 생각: 나를 무시하는 것 같다|다른 해석: 단순히 의견이 다를 수도 있다|다음 행동: 감정이 진정된 후 이유를 물어본다", "note": "인지행동치료에서 쓰는 생각 다시 보기 방법과 비슷해요.", "source": "ChatGPT 공유 내용 (성인 기준, 일반 생활 조언)"}, {"day": "DAY 6", "title": "수면과 감정 조절 연결하기", "goal": "낮의 긴장을 줄여서 밤의 잠을 도와요.", "ex_title": "오늘 관찰할 질문", "examples": "잠을 적게 잔 날 더 쉽게 화가 나는가?|피곤할수록 재미있는 일에 더 몰입하는가?|스트레스를 받은 날 잠들기가 더 어려운가?", "note": "이런 관계를 알면 내가 약해지는 시간대를 찾는 데 도움이 돼요.", "source": "ChatGPT 공유 내용 (성인 기준, 일반 생활 조언)"}, {"day": "DAY 7", "title": "나에게 맞는 루틴 완성하기", "goal": "일주일 동안의 변화를 확인하고 이어갈 습관을 골라요.", "ex_title": "스스로 물어볼 질문", "examples": "화가 난 뒤 진정되는 시간이 줄었는가?|중요한 일을 시작하는 시간이 빨라졌는가?|잠들기 전 생각이 조금 줄었는가?|가장 효과적이었던 훈련은 무엇인가?", "note": "7일 만에 불면증이나 ADHD 증상이 치료되는 것은 아니지만, 나에게 효과적인 방법을 찾는 출발점이 될 수 있어요.", "source": "ChatGPT 공유 내용 (성인 기준, 일반 생활 조언)"}], "program_steps": [{"key": "D1-1", "day": "DAY 1", "order": 1, "minutes": 5, "activity": "최근 화가 났던 상황 3가지 기록하기"}, {"key": "D1-2", "day": "DAY 1", "order": 2, "minutes": 5, "activity": "감정 강도를 0~10점으로 표시하기"}, {"key": "D1-3", "day": "DAY 1", "order": 3, "minutes": 5, "activity": "최근 취침 시간과 기상 시간 기록하기"}, {"key": "D1-4", "day": "DAY 1", "order": 4, "minutes": 5, "activity": "잠들기 전 머릿속에 떠오르는 걱정 적기"}, {"key": "D2-1", "day": "DAY 2", "order": 1, "minutes": 5, "activity": "천천히 숨 내쉬기 연습"}, {"key": "D2-2", "day": "DAY 2", "order": 2, "minutes": 5, "activity": "감정이 올라오는 몸의 신호 확인하기"}, {"key": "D2-3", "day": "DAY 2", "order": 3, "minutes": 5, "activity": "상황별 대응 문장 연습하기"}, {"key": "D2-4", "day": "DAY 2", "order": 4, "minutes": 5, "activity": "감정이 진정되는 과정 기록하기"}, {"key": "D3-1", "day": "DAY 3", "order": 1, "minutes": 5, "activity": "내일 할 일 모두 적기"}, {"key": "D3-2", "day": "DAY 3", "order": 2, "minutes": 5, "activity": "걱정거리와 해결할 수 있는 일 구분하기"}, {"key": "D3-3", "day": "DAY 3", "order": 3, "minutes": 5, "activity": "목, 어깨, 턱 근육 풀기"}, {"key": "D3-4", "day": "DAY 3", "order": 4, "minutes": 5, "activity": "천천히 호흡하기"}, {"key": "D4-1", "day": "DAY 4", "order": 1, "minutes": 5, "activity": "오늘 가장 중요한 일 하나 고르기"}, {"key": "D4-2", "day": "DAY 4", "order": 2, "minutes": 5, "activity": "그 일의 첫 행동 정하기"}, {"key": "D4-3", "day": "DAY 4", "order": 3, "minutes": 10, "activity": "실제로 시작하기"}, {"key": "D4-4", "day": "DAY 4", "order": 4, "minutes": 5, "activity": "시작한 뒤의 기분 기록하기"}, {"key": "D5-1", "day": "DAY 5", "order": 1, "minutes": 5, "activity": "감정이 오래 이어진 최근 상황 떠올리기"}, {"key": "D5-2", "day": "DAY 5", "order": 2, "minutes": 5, "activity": "그때의 생각과 사실 구분하기"}, {"key": "D5-3", "day": "DAY 5", "order": 3, "minutes": 10, "activity": "가볍게 걷거나 몸 풀기"}, {"key": "D5-4", "day": "DAY 5", "order": 4, "minutes": 5, "activity": "다음에 쓸 대응 방법 기록하기"}, {"key": "D6-1", "day": "DAY 6", "order": 1, "minutes": 10, "activity": "가벼운 스트레칭"}, {"key": "D6-2", "day": "DAY 6", "order": 2, "minutes": 5, "activity": "오늘의 감정 기록하기"}, {"key": "D6-3", "day": "DAY 6", "order": 3, "minutes": 5, "activity": "내일의 중요한 일 한 가지 정하기"}, {"key": "D6-4", "day": "DAY 6", "order": 4, "minutes": 5, "activity": "호흡과 근육 풀기"}, {"key": "D7-1", "day": "DAY 7", "order": 1, "minutes": 5, "activity": "감정 변화 돌아보기"}, {"key": "D7-2", "day": "DAY 7", "order": 2, "minutes": 5, "activity": "수면 기록 비교하기"}, {"key": "D7-3", "day": "DAY 7", "order": 3, "minutes": 5, "activity": "실행력 변화 확인하기"}, {"key": "D7-4", "day": "DAY 7", "order": 4, "minutes": 5, "activity": "다음 주에 이어갈 습관 3개 정하기"}], "tracker_items": [{"key": "t1", "label": "감정이 올라오는 정도", "low": "0점: 거의 없음", "high": "10점: 매우 심함"}, {"key": "t2", "label": "화가 난 뒤 진정되는 어려움", "low": "0점: 쉽게 진정", "high": "10점: 매우 어려움"}, {"key": "t3", "label": "중요한 일을 미루는 정도", "low": "0점: 바로 시작", "high": "10점: 거의 시작하지 못함"}, {"key": "t4", "label": "잠드는 데 걸리는 어려움", "low": "0점: 쉽게 잠듦", "high": "10점: 매우 어려움"}]};
+  var fns = [];
+  window.dash = {
+    data: function (id) { return DATA[id] ? { status: 'ok', data: DATA[id], message: '' } : { status: 'missing', data: [], message: '' }; },
+    onData: function (fn) {
+      fns.push(fn); fn();
+      var t;
+      window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(function () { fns.forEach(function (f) { f(); }); }, 120); });
+    },
+    colors: ['#1769aa', '#b86a00', '#0f8b8d', '#6b5bb5']
+  };
+})();
+
+</script>
+<script>
+
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var PAL = ['#1769aa', '#b86a00'];
+
+  function showTab(t) {
+    $$('.ad-tab').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.tab === t)); });
+    $$('.ad-panel').forEach(function (p) { p.hidden = p.dataset.panel !== t; });
+    if (t === 'week') drawChart();
+  }
+  $$('.ad-tab').forEach(function (b) { b.addEventListener('click', function () { showTab(b.dataset.tab); }); });
+
+  var symGroup = null;
+  function showSym() {
+    $$('.ad-pickbtn').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.group === symGroup)); });
+    $('#ad-hint').hidden = symGroup !== null;
+    $('#ad-symwrap').hidden = symGroup === null;
+    $('#ad-result').hidden = symGroup === null;
+    fillSymptoms();
+    renderResult();
+  }
+
+  var checks = {};
+  function fillSymptoms() {
+    var t = document.getElementById('ad-t-symptoms');
+    var d = dash.data('symptoms');
+    var tb = t.querySelector('tbody');
+    tb.textContent = '';
+    if (d.status !== 'ok') {
+      var tr0 = document.createElement('tr');
+      var td0 = document.createElement('td');
+      td0.colSpan = 5;
+      if (d.status === 'error' || d.status === 'missing' || d.status === 'declined') {
+        var box = document.createElement('div'); box.className = 'ad-fail';
+        box.appendChild(document.createElement('i'));
+        var sp0 = document.createElement('span'); sp0.textContent = 'Failed to load'; box.appendChild(sp0);
+        td0.appendChild(box);
+      }
+      tr0.appendChild(td0); tb.appendChild(tr0);
+      return;
+    }
+    d.data.filter(function (r) { return r.group === symGroup; }).forEach(function (r, i) {
+      var tr = document.createElement('tr');
+      tr.className = (r.group === '부주의' ? 'ad-in' : 'ad-hy') + (checks[r.symptom] ? ' ad-on' : '');
+      tr.setAttribute('data-key', r.symptom);
+      var n = document.createElement('td'); n.className = 'ad-num';
+      var nb = document.createElement('span'); nb.textContent = String(i + 1); n.appendChild(nb);
+      var c = document.createElement('td'); c.className = 'ad-chk';
+      var lab = document.createElement('label');
+      var inp = document.createElement('input'); inp.type = 'checkbox'; inp.checked = !!checks[r.symptom];
+      inp.setAttribute('aria-label', r.symptom + ' 해당 여부');
+      var st = document.createElement('span'); st.textContent = inp.checked ? '해당' : '아님';
+      inp.addEventListener('change', function () {
+        checks[r.symptom] = inp.checked;
+        st.textContent = inp.checked ? '해당' : '아님';
+        tr.classList.toggle('ad-on', inp.checked);
+        renderResult();
+      });
+      lab.appendChild(inp); lab.appendChild(st); c.appendChild(lab);
+      tr.appendChild(n); tr.appendChild(c);
+      ['symptom', 'group', 'plain'].forEach(function (f) {
+        var td = document.createElement('td');
+        td.textContent = r[f] == null ? '' : String(r[f]);
+        tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+  }
+
+  function renderResult() {
+    var box = $('#ad-result');
+    box.textContent = '';
+    var s = dash.data('symptoms'), c = dash.data('criteria');
+    if (s.status !== 'ok' || c.status !== 'ok') return;
+    var thrRow = c.data.find(function (x) { return x.id === 'threshold_17'; });
+    var thr = thrRow ? Number(thrRow.value) : 0;
+    ['부주의', '과잉행동·충동'].forEach(function (g, gi) {
+      var rows = s.data.filter(function (x) { return x.group === g; });
+      var n = rows.filter(function (x) { return checks[x.symptom]; }).length;
+      var hit = thr > 0 && n >= thr;
+      var item = document.createElement('div');
+      item.className = 'ad-res' + (hit ? ' ad-hit' : '');
+      item.style.setProperty('--rc', PAL[gi]);
+      var h = document.createElement('b'); h.textContent = g + ' 평가 결과 (' + thr + '개 이상이면 해당)';
+      var bar = document.createElement('div'); bar.className = 'ad-bar';
+      var fill = document.createElement('div'); fill.style.width = (rows.length ? n / rows.length * 100 : 0) + '%';
+      bar.appendChild(fill);
+      var sm = document.createElement('small');
+      sm.textContent = n + ' / ' + rows.length + '개 해당 · ' + (hit ? '진단 기준 개수(' + thr + '개) 이상이에요' : '진단 기준 개수(' + thr + '개)에는 못 미쳐요');
+      item.appendChild(h); item.appendChild(bar); item.appendChild(sm);
+      box.appendChild(item);
+    });
+    var note = document.createElement('p');
+    note.textContent = '직접 체크한 결과는 참고용이에요. 진단은 의사가 증상이 시작된 시기, 나타나는 장소, 지속 기간까지 함께 보고 내려요.';
+    box.appendChild(note);
+  }
+  $$('.ad-pickbtn').forEach(function (b) {
+    b.addEventListener('click', function () { symGroup = symGroup === b.dataset.group ? null : b.dataset.group; showSym(); });
+  });
+
+  function fillMarks() {
+    $$('.ad [data-where]').forEach(function (el) {
+      var d = dash.data(el.dataset.source);
+      if (d.status !== 'ok') { el.textContent = '—'; return; }
+      var p = new URLSearchParams(el.dataset.where);
+      var pairs = Array.from(p.entries());
+      var row = d.data.find(function (r) { return pairs.every(function (kv) { return String(r[kv[0]]) === kv[1]; }); });
+      el.textContent = row ? String(row[el.dataset.field]) : '—';
+    });
+  }
+
+  function fillTable(tid) {
+    var t = document.getElementById(tid);
+    var d = dash.data(t.dataset.source);
+    var tb = t.querySelector('tbody');
+    var fields = $$('th', t).map(function (th) { return th.dataset.field; });
+    tb.textContent = '';
+    if (d.status !== 'ok') {
+      var tr0 = document.createElement('tr');
+      var td0 = document.createElement('td');
+      td0.colSpan = fields.length;
+      if (d.status === 'error' || d.status === 'missing' || d.status === 'declined') {
+        var box = document.createElement('div'); box.className = 'ad-fail';
+        box.appendChild(document.createElement('i'));
+        var sp = document.createElement('span'); sp.textContent = 'Failed to load'; box.appendChild(sp);
+        td0.appendChild(box);
+      }
+      tr0.appendChild(td0); tb.appendChild(tr0);
+      return;
+    }
+    var shown = d.data;
+    if (tid === 'ad-t-symptoms') shown = d.data.filter(function (r) { return r.group === symGroup; });
+    shown.forEach(function (r) {
+      var tr = document.createElement('tr');
+      if (r.you === 'yes') tr.className = 'ad-you';
+      if (tid === 'ad-t-symptoms') tr.className = r.group === '부주의' ? 'ad-in' : 'ad-hy';
+      fields.forEach(function (f) {
+        var td = document.createElement('td');
+        td.textContent = r[f] == null ? '' : String(r[f]);
+        if (tid === 'ad-t-journey' && f === 'step') td.className = 'ad-step';
+        if (tid === 'ad-t-side' && f === 'effect') td.className = String(r.effect).indexOf('드문') >= 0 ? 'ad-eff-rare' : 'ad-eff';
+        if (tid === 'ad-t-diet' && f === 'approach') td.className = 'ad-app';
+        if ((tid === 'ad-t-drugs' || tid === 'ad-t-comorbid' || tid === 'ad-t-daily' || tid === 'ad-t-supp' || tid === 'ad-t-skills') && f === 'item') td.className = 'ad-app';
+        if (f === 'check') {
+          var ck = String(r.check);
+          td.className = ck.indexOf('확인됨') === 0 ? 'ad-ck-ok' : ck.indexOf('일부') === 0 ? 'ad-ck-part' : 'ad-ck-no';
+        }
+        if (tid === 'ad-t-diet' && f === 'caution') td.className = 'ad-caution';
+        if (tid === 'ad-t-diet' && f === 'evidence') {
+          var ev = String(r.evidence);
+          td.className = ev.indexOf('탄탄') >= 0 ? 'ad-ev-strong' : ev.indexOf('연관') >= 0 ? 'ad-ev-mid' : ev.indexOf('일부') >= 0 ? 'ad-ev-some' : 'ad-ev-tip';
+        }
+        tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+  }
+
+
+  /* ---- 7일 수면·감정 조절 프로그램 ---- */
+  var PAL4 = ['#1769aa', '#b86a00', '#0f8b8d', '#6b5bb5'];
+  var weekDay = 'DAY 1';
+  var scores = {};
+  function mk(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function failLine() {
+    var f = mk('div', 'ad-fail'); f.appendChild(document.createElement('i'));
+    f.appendChild(mk('span', null, 'Failed to load'));
+    return f;
+  }
+  function isBad(d) { return d.status === 'error' || d.status === 'missing' || d.status === 'declined'; }
+
+  function fillText(tid, section) {
+    var t = document.getElementById(tid);
+    var d = dash.data('week_text');
+    var tb = t.querySelector('tbody');
+    tb.textContent = '';
+    if (d.status !== 'ok') {
+      if (isBad(d)) { var tr0 = mk('tr'); var td0 = mk('td'); td0.colSpan = 2; td0.appendChild(failLine()); tr0.appendChild(td0); tb.appendChild(tr0); }
+      return;
+    }
+    d.data.filter(function (r) { return r.section === section; }).forEach(function (r) {
+      var tr = mk('tr'); tr.setAttribute('data-key', r.key);
+      tr.appendChild(mk('td', 'ad-app', r.item));
+      tr.appendChild(mk('td', 'ad-lines', r.how));
+      tb.appendChild(tr);
+    });
+  }
+
+  function renderWeek() {
+    var days = dash.data('program_days'), steps = dash.data('program_steps');
+    var bar = $('#ad-daybar'); bar.textContent = '';
+    var tb = $('#ad-t-steps tbody'); tb.textContent = '';
+    var ul = $('#ad-ex-list'); ul.textContent = '';
+    if (days.status !== 'ok') {
+      $('#ad-day-title').textContent = ''; $('#ad-day-goal').textContent = ''; $('#ad-ex-title').textContent = ''; $('#ad-day-note').textContent = '';
+      if (isBad(days)) bar.appendChild(failLine());
+      return;
+    }
+    days.data.forEach(function (d) {
+      var b = mk('button', 'ad-daybtn'); b.type = 'button';
+      b.setAttribute('aria-pressed', String(d.day === weekDay));
+      b.appendChild(mk('b', null, d.day)); b.appendChild(mk('span', null, d.title));
+      b.addEventListener('click', function () { weekDay = d.day; renderWeek(); });
+      bar.appendChild(b);
+    });
+    var cur = days.data.find(function (d) { return d.day === weekDay; });
+    if (!cur) return;
+    $('#ad-day-title').textContent = cur.day + ' — ' + cur.title;
+    $('#ad-day-goal').textContent = '목표: ' + cur.goal;
+    $('#ad-ex-title').textContent = cur.ex_title;
+    String(cur.examples).split('|').forEach(function (x) { ul.appendChild(mk('li', null, x)); });
+    $('#ad-day-note').textContent = cur.note;
+    if (steps.status === 'ok') {
+      steps.data.filter(function (r) { return r.day === weekDay; }).forEach(function (r) {
+        var tr = mk('tr'); tr.setAttribute('data-key', r.key);
+        var n = mk('td', 'ad-no'); n.appendChild(mk('span', null, String(r.order)));
+        tr.appendChild(n);
+        tr.appendChild(mk('td', 'ad-min', r.minutes + '분'));
+        tr.appendChild(mk('td', null, r.activity));
+        tb.appendChild(tr);
+      });
+    }
+  }
+
+  function renderTracker() {
+    var d = dash.data('tracker_items');
+    var tb = $('#ad-t-tracker tbody'); tb.textContent = '';
+    var lg = $('#ad-chart-legend'); lg.textContent = '';
+    if (d.status !== 'ok') {
+      if (isBad(d)) { var tr0 = mk('tr'); var td0 = mk('td'); td0.colSpan = 8; td0.appendChild(failLine()); tr0.appendChild(td0); tb.appendChild(tr0); }
+      return;
+    }
+    d.data.forEach(function (m, mi) {
+      if (!scores[m.key]) scores[m.key] = [null, null, null, null, null, null, null];
+      var tr = mk('tr'); tr.setAttribute('data-key', m.key);
+      var first = mk('td', null, m.label);
+      first.appendChild(mk('small', null, m.low + ' · ' + m.high));
+      tr.appendChild(first);
+      for (var i = 0; i < 7; i++) {
+        (function (i) {
+          var td = mk('td'); td.style.textAlign = 'center';
+          var sel = mk('select', 'ad-sc');
+          sel.setAttribute('aria-label', m.label + ' ' + (i + 1) + '일째 점수');
+          var o0 = mk('option', null, '-'); o0.value = ''; sel.appendChild(o0);
+          for (var v = 0; v <= 10; v++) { var o = mk('option', null, String(v)); o.value = String(v); sel.appendChild(o); }
+          var cur = scores[m.key][i];
+          sel.value = cur == null ? '' : String(cur);
+          sel.addEventListener('change', function () { scores[m.key][i] = sel.value === '' ? null : Number(sel.value); drawChart(); });
+          td.appendChild(sel); tr.appendChild(td);
+        })(i);
+      }
+      tb.appendChild(tr);
+      var chip = mk('span', null, m.label); chip.style.setProperty('--sw', PAL4[mi % 4]);
+      chip.insertBefore(document.createElement('i'), chip.firstChild);
+      lg.appendChild(chip);
+    });
+  }
+
+  function drawChart() {
+    var box = $('#ad-chart');
+    if (!box) return;
+    var d = dash.data('tracker_items');
+    box.textContent = '';
+    if (d.status !== 'ok') return;
+    var w = box.clientWidth;
+    if (!w) return;
+    var any = d.data.some(function (m) { return (scores[m.key] || []).some(function (v) { return v != null; }); });
+    if (!any) { box.appendChild(mk('div', 'ad-chartempty', '점수를 입력하면 7일 동안의 변화가 선 그래프로 나와요.')); return; }
+    var NS = 'http://www.w3.org/2000/svg';
+    var H = 230, ml = 30, mr = 14, mt = 12, mb = 28;
+    var x = function (i) { return ml + (w - mr - ml) * i / 6; };
+    var y = function (v) { return (H - mb) - (H - mb - mt) * v / 10; };
+    function node(tag, attrs, text) {
+      var e = document.createElementNS(NS, tag);
+      Object.keys(attrs).forEach(function (k) { e.setAttribute(k, attrs[k]); });
+      if (text != null) e.textContent = text;
+      return e;
+    }
+    var svg = node('svg', { width: '100%', viewBox: '0 0 ' + w + ' ' + H, role: 'img' });
+    [0, 5, 10].forEach(function (t) {
+      svg.appendChild(node('line', { x1: ml, x2: w - mr, y1: y(t), y2: y(t), stroke: 'var(--color-border-line)' }));
+      svg.appendChild(node('text', { x: ml - 6, y: y(t) + 4, 'text-anchor': 'end' }, String(t)));
+    });
+    for (var i = 0; i < 7; i++) svg.appendChild(node('text', { x: x(i), y: H - 8, 'text-anchor': 'middle' }, (i + 1) + '일'));
+    d.data.forEach(function (m, mi) {
+      var col = PAL4[mi % 4];
+      var vals = scores[m.key] || [];
+      var path = '', pen = false;
+      vals.forEach(function (v, i) {
+        if (v == null) { pen = false; return; }
+        path += (pen ? 'L' : 'M') + x(i) + ' ' + y(v) + ' ';
+        pen = true;
+      });
+      if (path) svg.appendChild(node('path', { d: path, fill: 'none', stroke: col, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+      vals.forEach(function (v, i) {
+        if (v == null) return;
+        var c = node('circle', { cx: x(i), cy: y(v), r: 4, fill: col });
+        c.appendChild(node('title', {}, m.label + ' ' + (i + 1) + '일째 ' + v + '점'));
+        svg.appendChild(c);
+      });
+    });
+    box.appendChild(svg);
+  }
+
+  function renderWeekAll() {
+    fillText('ad-t-routine', 'routine');
+    fillText('ad-t-rules', 'rules');
+    fillText('ad-t-core', 'core');
+    renderWeek();
+    renderTracker();
+    drawChart();
+  }
+
+  dash.onData(function () {
+    fillMarks();
+    ['ad-t-treatment', 'ad-t-journey', 'ad-t-drugs', 'ad-t-comorbid', 'ad-t-side', 'ad-t-daily', 'ad-t-skills', 'ad-t-diet', 'ad-t-supp'].forEach(fillTable);
+    fillSymptoms();
+    renderResult();
+    renderWeekAll();
+  });
+})();
+
+</script>
+</body>
+</html>
